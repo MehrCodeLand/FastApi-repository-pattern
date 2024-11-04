@@ -12,6 +12,11 @@ class UserService:
     def get_all_user(self):
         return self.user_repository.get_users()
     
+    def get_one_user(self , user_id):
+        return self.user_repository.get_one_user(user_id)
+    def remove_user(self, user_id):
+        return 
+    
     
 class LanguageService:
     def __init__(self , language_repository: LanguRepository):
@@ -31,4 +36,5 @@ class DatabaseService:
     
     def write_database(self , data):
         return self.database_repository.write_database(data)
+    
     

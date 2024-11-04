@@ -1,6 +1,5 @@
 from typing import List
 from models import User , Language
-from schemas import UserCreate
 import json
 
 
@@ -12,7 +11,6 @@ class DatabaseRepository:
     def __init__(self):
         pass
         
-    # updated database method
     def write_database(self , data):
         with open(DATABASE_PATH , 'w') as file_json:
             json.dump(data , file_json)
@@ -20,6 +18,19 @@ class DatabaseRepository:
     def read_database(self):
         with open(DATABASE_PATH , 'r') as file_json:
             return json.load(file_json)
+        
+    def get_one_user(self , user_id):
+        data = self.read_database()
+        user = data["Users"][user_id]        
+        return user
+        
+     
+    def remove_user(self , user_id):
+        user = self.get_one_user(user_id)
+        data = self.read_database()
+        
+        # time to removing obj 
+        
         
     def add_user(self,user:User):
         data = self.read_database()
@@ -36,7 +47,7 @@ class DatabaseRepository:
 # implement database repository here 
 
 
-class UserRepository:
+class UserRepository: 
     def __init__(self):
         self.users = [] # in memory data-base
         
@@ -48,17 +59,19 @@ class UserRepository:
     ) 
            
         db = DatabaseRepository()  
-        data = db.get_all_user()
-        data["Users"][user.id] = {"username":user.username , "password":user.password , "language_id" : None}         
-        
         db.add_user(new_user)
         return new_user        
+        
+        
+    def get_one_user(self , user_id):
+        db = DatabaseRepository()
+        user = db.get_one_user(user_id) 
+        return user   
         
     def get_users(self) -> List[User]:
         db = DatabaseRepository()
         return db.get_all_user()
-        
-        
+
         
 class LanguRepository:
     def __init__(self):
@@ -71,7 +84,6 @@ class LanguRepository:
             hola = languages.hola
             )
         database_here = DatabaseRepository()
-        database_here.write_database_User()
         self.languages.append(new_language)
         
         return new_language

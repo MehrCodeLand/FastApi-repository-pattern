@@ -1,4 +1,4 @@
-from fastapi import FastAPI , Path , Depends
+from fastapi import FastAPI , Depends
 
 # inner files 
 # ( schema for data validation we dont use  )
@@ -6,7 +6,7 @@ from models import  User , Language
 from repositories import UserRepository , LanguRepository , DatabaseRepository
 from services import UserService , LanguageService , DatabaseService
 
-app = FastAPI()
+app = FastAPI() 
 
 # repository check and constructor
 def get_user_repository():
@@ -30,7 +30,7 @@ def get_language_service(
 
 
 # user HTTP leyer
-@app.get("/users-get/")
+@app.get("/users/get-all")
 def get_all_user(
     user_service: UserService = Depends(get_user_service)
 ): return user_service.get_all_user()
@@ -40,6 +40,10 @@ def create_user(
     user: User, user_service: UserService = Depends(get_user_service)
     ): return user_service.create_user(user)
 
+@app.post("/users/get-one-user")
+def get_user_by_id(
+    user_id , user_service: UserService = Depends(get_user_service)
+):return user_service.get_one_user(user_id)
 
 # languages HTTP leyer
 @app.post("/languages/create-languages")
