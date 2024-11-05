@@ -35,7 +35,7 @@ def get_all_user(
     user_service: UserService = Depends(get_user_service)
 ): return user_service.get_all_user()
     
-@app.post("/users/")
+@app.post("/users/create")
 def create_user(
     user: User, user_service: UserService = Depends(get_user_service)
     ): return user_service.create_user(user)
@@ -45,6 +45,10 @@ def get_user_by_id(
     user_id , user_service: UserService = Depends(get_user_service)
 ):return user_service.get_one_user(user_id)
 
+@app.post("/users/update")
+def update_user(
+    user:User , user_service : UserService = Depends(get_user_service) 
+): return user_service.update_user(user)
 
 @app.post("/user/remove-by-id")
 def remove_user(

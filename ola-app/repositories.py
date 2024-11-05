@@ -26,8 +26,6 @@ class DatabaseRepository:
         return user
         
      
-    
-        
     def add_user(self,user:User):
         data = self.read_database()
         data["Users"][user.id] = {"username": user.username , "password":user.password}
@@ -59,19 +57,25 @@ class UserRepository:
         db.add_user(new_user)
         return new_user        
         
+    
+    
     def remove_user(self , user_id):
         user = self.get_one_user(user_id)
         db = DatabaseRepository()
         data = db.read_database()
-        print("- - - - - - - - -- - - - ")
-        print(user)
         # time to removing obj 
         if user["id"] in data["Users"]:
             del data["Users"][user["id"]]
-            print(data["Users"])
             db.write_database(data)
             return "deleted"
             
+    def update_user(self , user:User):
+        db = DatabaseRepository()
+        data = db.read_database()
+                
+        self.remove_user(user.id)
+        self.create_user(user)
+        return user
                 
     def get_one_user(self , user_id):
         db = DatabaseRepository()

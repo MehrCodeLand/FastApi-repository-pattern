@@ -17,7 +17,9 @@ class UserService:
     
     def remove_user(self, user_id):
         return self.user_repository.remove_user(user_id)
-    
+
+    def update_user(self , user:User):
+        return self.user_repository.update_user(user)    
     
     
     
