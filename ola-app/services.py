@@ -14,8 +14,11 @@ class UserService:
     
     def get_one_user(self , user_id):
         return self.user_repository.get_one_user(user_id)
+    
     def remove_user(self, user_id):
-        return 
+        return self.user_repository.remove_user(user_id)
+    
+    
     
     
 class LanguageService:

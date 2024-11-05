@@ -21,16 +21,12 @@ class DatabaseRepository:
         
     def get_one_user(self , user_id):
         data = self.read_database()
-        user = data["Users"][user_id]        
+        user = data["Users"][user_id]  
+        user["id"] = user_id      
         return user
         
      
-    def remove_user(self , user_id):
-        user = self.get_one_user(user_id)
-        data = self.read_database()
-        
-        # time to removing obj 
-        
+    
         
     def add_user(self,user:User):
         data = self.read_database()
@@ -40,6 +36,7 @@ class DatabaseRepository:
     def get_all_user(self):
         data = self.read_database()
         return data["Users"]
+    
     
     
 
@@ -62,7 +59,20 @@ class UserRepository:
         db.add_user(new_user)
         return new_user        
         
-        
+    def remove_user(self , user_id):
+        user = self.get_one_user(user_id)
+        db = DatabaseRepository()
+        data = db.read_database()
+        print("- - - - - - - - -- - - - ")
+        print(user)
+        # time to removing obj 
+        if user["id"] in data["Users"]:
+            del data["Users"][user["id"]]
+            print(data["Users"])
+            db.write_database(data)
+            return "deleted"
+            
+                
     def get_one_user(self , user_id):
         db = DatabaseRepository()
         user = db.get_one_user(user_id) 

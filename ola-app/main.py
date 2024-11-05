@@ -45,6 +45,12 @@ def get_user_by_id(
     user_id , user_service: UserService = Depends(get_user_service)
 ):return user_service.get_one_user(user_id)
 
+
+@app.post("/user/remove-by-id")
+def remove_user(
+    user_id , user_service : UserService = Depends(get_user_service)
+): return user_service.remove_user(user_id)
+
 # languages HTTP leyer
 @app.post("/languages/create-languages")
 def create_languages(
